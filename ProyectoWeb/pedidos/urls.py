@@ -1,11 +1,11 @@
-from django.urls import path
-from . import views
-from django.conf import settings
-from django.conf.urls.static import static
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import PedidoViewSet, LineaPedidoViewSet
+
+router = DefaultRouter()
+router.register(r'pedidos', PedidoViewSet)  # Endpoints para Pedido
+router.register(r'lineas-pedido', LineaPedidoViewSet)  # Endpoints para LineaPedido
 
 urlpatterns = [
-path('', views.procesar_pedido, name="procesar_pedido"),
-
+    path('api/', include(router.urls)),  # Incluye todas las rutas del enrutador
 ]
-
-

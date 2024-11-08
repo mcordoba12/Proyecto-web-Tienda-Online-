@@ -1,36 +1,23 @@
-"""
-URL configuration for ProyectoWeb project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-
 urlpatterns = [
+    # Administración
     path('admin/', admin.site.urls),
-    path('servicios/', include('servicios.urls')), #Enlazamos la app con el proyecto para traer las urls de la app
-    path('blog/', include('blog.urls')), #Enlazamos la app con el proyecto para traer las urls de la app
-    path('contacto/', include('contacto.urls')), #Enlazamos la app con el proyecto para traer las urls de la app
-    path('tienda/', include('tienda.urls')), #Enlazamos la app con el proyecto para traer las urls de la app
-    path('carro/', include('carro.urls')), #Enlazamos la app con el proyecto para traer las urls de la app
-    path('autentificacion/', include('autentificacion.urls')), #Enlazamos la app con el proyecto para traer las urls de la app
-    path('', include('ProyectoWebApp.urls')), #Enlazamos la app con el proyecto para traer las urls de la app 
-    path('pedidos/', include('pedidos.urls')), #Enlazamos la app con el proyecto para traer las urls de la app
+
+    # Aplicaciones del Proyecto
+    path('tienda/', include('tienda.urls')),  # Rutas de la app Tienda
+    path('carro/', include('carro.urls')),    
+    path('autentificacion/', include('autentificacion.urls')),  # Rutas de autenticación
+    path('pedidos/', include('pedidos.urls')),  # Rutas de Pedidos
+
+    # Página Principal
+    path('', include('ProyectoWebApp.urls')),  # Rutas de la app principal
 ]
 
+
+# Servir archivos de medios en modo de desarrollo
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

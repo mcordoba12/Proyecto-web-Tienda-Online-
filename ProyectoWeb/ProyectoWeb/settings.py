@@ -38,10 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'django_extensions',
+
+
     'ProyectoWebApp', #Agregamos la app al proyecto
-    'servicios', #Agregamos la app al proyecto
-    'blog', #Agregamos la app al proyecto
-    'contacto', #Agregamos la app al proyecto
     'tienda', #Agregamos la app al proyecto
     'carro', #Agregamos la app al proyecto
     'autentificacion', #Agregamos la app al proyecto

@@ -1,18 +1,18 @@
 from django.urls import path
-from . import views
-from django.conf import settings
-from django.conf.urls.static import static
+from .views import (
+    AgregarAlCarroView,
+    EliminarProductoView,
+    RestarProductoView,
+    LimpiarCarroView,
+    ObtenerCarroView,
+)
 
-app_name = "carro" #nombre de la aplicacion para usar todas las urls
+app_name = "carro"
 
 urlpatterns = [
-    path("agregar/<int:producto_id>/", views.agregar_producto, name="agregar"), #agregar producto al carrito
-    path("eliminar/<int:producto_id>/", views.eliminar_producto, name="eliminar"), #eliminar producto del carrito
-    path("restar/<int:producto_id>/", views.restar_producto, name="restar"), #restar producto del carrito
-    path("limpiar/", views.limpiar_carro , name="limpiar"), #limpiar carrito
-    
-    
+    path('api/carro/agregar/<int:producto_id>/', AgregarAlCarroView.as_view(), name='agregar_al_carro'),
+    path('api/carro/eliminar/<int:producto_id>/', EliminarProductoView.as_view(), name='eliminar'),
+    path('api/carro/restar/<int:producto_id>/', RestarProductoView.as_view(), name='restar'),
+    path('api/carro/limpiar/', LimpiarCarroView.as_view(), name='limpiar'),
+path('api/carro/', ObtenerCarroView.as_view(), name='obtener_carro')
 ]
-
-
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) #para cargar imagenes en el panel de administracion

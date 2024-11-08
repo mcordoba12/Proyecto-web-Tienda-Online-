@@ -1,16 +1,13 @@
+# autentificacion/urls.py
 from django.urls import path
-from .views import VRegistro, cerrar_sesion, login
-from django.conf.urls.static import static
-from django.conf import settings
+from .views import RegistroView, LoginView, LogoutView, LoginPageView, RegistroPageView
 
-
+app_name = "autentificacion"
 
 urlpatterns = [
-
-    path('', VRegistro.as_view(), name="autentificacion"),
-    path('cerrar_sesion/', cerrar_sesion, name="cerrar_sesion"),
-    path('login/', login, name="login")
-
+    path('api/registro/', RegistroView.as_view(), name='api_registro'),  # Endpoint de API para registro
+    path('registro/', RegistroPageView.as_view(), name='registro_page'),  # Página de registro
+    path('api/login/', LoginView.as_view(), name='api_login'),  # Endpoint de API para login
+    path('api/logout/', LogoutView.as_view(), name='api_logout'),  # Endpoint de API para logout
+    path('login/', LoginPageView.as_view(), name='login_page'),  # Página de inicio de sesión
 ]
-
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) #para cargar imagenes en el panel de administracion

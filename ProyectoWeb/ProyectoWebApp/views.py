@@ -1,13 +1,7 @@
-from django.shortcuts import render, HttpResponse
-
+# views.py
+from django.shortcuts import render
 from carro.carro import Carro
 
-# Create your views here.
-
 def home(request):   
-    carro = Carro(request) #instanciamos la clase Carro dedes aqui porque 
-    return render(request, "ProyectoWebApp/home.html") #Renderizamos la plantilla home.html para mostrarla en el navegador
-
-
-
-
+    carro = Carro(request)  # Instanciamos la clase Carro (si se requiere en el backend)
+    return render(request, "ProyectoWebApp/home.html")  # Renderizamos la plantilla home.html

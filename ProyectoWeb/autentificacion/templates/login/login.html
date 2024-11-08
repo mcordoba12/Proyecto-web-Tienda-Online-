@@ -1,32 +1,56 @@
 {% extends 'ProyectoWebApp/base.html' %}
 
-{% load static %}
-{% load crispy_forms_tags %}
-
 {% block content %}
 
-&nbsp;
-&nbsp;
+<div style="margin-top: 20px;"></div>
 
+<!-- Formulario de inicio de sesión con JavaScript para enviar JSON -->
+<div style="width: 75%; margin: auto; color: white;">
+    <div class="form-group">
+        <label for="username">Nombre de usuario</label>
+        <input type="text" class="form-control" id="username" name="username" required>
+    </div>
 
+    <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+    </div>
 
-    <form method="POST" action="" style="color: white">
-        {% csrf_token %}
+    <button onclick="loginUser()" class="btn btn-success" style="width: 100%;">Iniciar Sesión</button>
 
-        <div style="width: 75%; margin: auto;">
+    <!-- Contenedor para mensajes -->
+    <div id="message-container"></div>
+</div>
 
-                {% if messages %}
-                    {% for message in messages %}
+<script>
+    async function loginUser() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
 
-                    <span class="alert alert-{{ message.tags }}">{{ message }}</span>
-                    {% endfor %}
+        try {
+            const response = await fetch("{% url 'autentificacion:api_login' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: JSON.stringify({ username, password })
+            });
 
-                {% endif %}
+            const data = await response.json();
 
-                <br/><br/><br/>
-            {{ form|crispy }}
+            if (response.ok) {
+                // Mostrar mensaje de éxito y redirigir al usuario
+                document.getElementById("message-container").innerHTML = `<div class="alert alert-success">${data.message}</div>`;
+                setTimeout(() => window.location.href = "{% url 'Home' %}", 2000);
+            } else {
+                // Mostrar mensaje de error
+                document.getElementById("message-container").innerHTML = `<div class="alert alert-danger">${data.error}</div>`;
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    }
+</script>
 
-            <button type="submit" class="btn btn-success" value="Registrarse">Login</button>
-        </div>
-    </form>
 {% endblock %}
